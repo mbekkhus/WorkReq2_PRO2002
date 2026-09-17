@@ -19,3 +19,8 @@ The original class used generic names such as `Converter`, `factor`, `offset`, a
 
 The original `Order` class depended directly on the internal structure of the user object, the databse connection, and specific SQL tables and columns. It also used a hardcoded order ID. This mixed domain data, business logic, and persistence in the same class, making the code difficult to test and change safely. 
 I separated the responsibilities into `Order`, `OrderService`, and `OrderRepository`. The `Order` class now only contains data, while `OrderService` creates the order and delegates storage to a repository. `InMemoryOrderRepository` is used as a simple database stub. The repository is injected into the service, wich reduces coupling and makes it possible to replace or test the storage solution without changing the order logic.  
+
+## Duplicated Discount Logic 
+
+The original code calculated the total and applied the same discount rule separately in both the shopping cart and the invoice. This duplication could cause inconsistent totals if the discount threshold or rate were changed in only one place. 
+I moved the shared calculation into `calculate_discounted_total()`. Both the cart and invoice now use this function, so the discount rule has a single source of truth. I also replaced the numeric values with the named constants `DISCOUNT_THRESHOLD_CENTS` and `DISCOUNT_RATE`. Prices are stored as integer cents to avoid floating-point precision issues. 
