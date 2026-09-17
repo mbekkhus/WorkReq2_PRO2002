@@ -17,8 +17,8 @@ The original class used generic names such as `Converter`, `factor`, `offset`, a
 
 ## Tightly Coupled Order Class
 
-The original `Order` class depended directly on the internal structure of the user object, the databse connection, and specific SQL tables and columns. It also used a hardcoded order ID. This mixed domain data, business logic, and persistence in the same class, making the code difficult to test and change safely. 
-I separated the responsibilities into `Order`, `OrderService`, and `OrderRepository`. The `Order` class now only contains data, while `OrderService` creates the order and delegates storage to a repository. `InMemoryOrderRepository` is used as a simple database stub. The repository is injected into the service, wich reduces coupling and makes it possible to replace or test the storage solution without changing the order logic.  
+The original `Order` class depended directly on the internal structure of the user object, the databse connection, and specific SQL tables and columns. It also used a hardcoded order ID. This mixed domain data, business logic, and persistence in the same class, making the code difficult to test and change.
+I changed the `Order` class so that it receives the required user values directly and only contains order data. The storage responsibility was moved to a separate `OrderRepository` class. This repository uses a simple list as a placeholder for a future database. Separating the order data from the storage logic reduces coupling and makes it easier to replace or test the persistence solution later.
 
 ## Duplicated Discount Logic 
 
