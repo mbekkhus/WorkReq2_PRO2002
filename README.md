@@ -24,3 +24,8 @@ I changed the `Order` class so that it receives the required user values directl
 
 The original code calculated the total and applied the same discount rule separately in both the shopping cart and the invoice. This duplication could cause inconsistent totals if the discount threshold or rate were changed in only one place. 
 I moved the shared calculation into `calculate_discounted_total()`. Both the cart and invoice now use this function, so the discount rule has a single source of truth. I also replaced the numeric values with the named constants `DISCOUNT_THRESHOLD_CENTS` and `DISCOUNT_RATE`. Prices are stored as integer cents to avoid floating-point precision issues. 
+
+## Process Order Method 
+
+The original `process_order()` function had several responsibilities. It calclulated the toal, apllied discounts, saved the order directly to a database, and sent a notification. Having all these responsibilities in one function made the code difficult to read, test, and change. 
+I seperated the work into smaller functions for calculating the total, applying discount, saving order, and sending the order conformation. The databse and notifications are simple placeholders because this assignment does not require real persistence or networking. The `process_order()` function now coordinates the different steps, while each separate function has one clear responsibilities. 
