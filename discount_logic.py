@@ -57,6 +57,6 @@ if __name__ == "__main__":
         items=items,
     )
 
-print(f"Cart total: {apply_discount_to_cart(cart)} cents")
-print()
-print(generate_invoice(order))
+    print(f"Cart total: {apply_discount_to_cart(cart)} cents")
+    print()
+    print(generate_invoice(order))
